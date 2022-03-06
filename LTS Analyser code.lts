@@ -1,0 +1,16 @@
+User = (quantity_lessthan_stocksize -> submit_validrequest -> success -> User
+| quantity_greaterthan_stocksize -> submit_invalidrequest -> error -> User ).
+
+Web_Application = (receive_quantity_lessthan_stocksize -> receive_validrequest -> save_validrequest -> receive_requestsaved -> shows_success -> Web_Application
+| receive_quantity_greaterthan_stocksize -> receive_invalidrequest -> save_invalidrequest -> receive_requestrejected -> shows_error -> Web_Application).
+
+Server = ( receive_tosave_validrequest -> requestsaved -> Server 
+| receive_tosave_invalidrequest -> requestrejected -> Server).
+
+
+|| User_Web_Server = (User || Web_Application || Server)/{quantity_lessthan_stocksize / receive_quantity_lessthan_stocksize,
+ submit_validrequest/receive_validrequest, success/shows_success, save_validrequest/receive_tosave_validrequest,
+requestsaved/receive_requestsaved  ,  quantity_greaterthan_stocksize/receive_quantity_greaterthan_stocksize,
+submit_invalidrequest/ receive_invalidrequest , save_invalidrequest/ receive_tosave_invalidrequest ,
+requestrejected/receive_requestrejected , error/ shows_error}.
+
